@@ -17,6 +17,20 @@ router.put("/:id", async (req, res) => {
   }
 });
 
+//ユーザー情報削除
+router.delete("/:id", async (req, res) => {
+  if (req.body.userId === req.params.id || req.body.isAdomin) {
+    try {
+      await User.findByIdAndDelete(req.params.id);
+      return res.status(200).json("ユーザー情報が削除されました。");
+    } catch (err) {
+      return res.status(500).json(err);
+    }
+  } else {
+    return res.status(403).json("自分のアカウントのみ削除できます。");
+  }
+});
+
 // router.get("/", (req, res) => {
 //   res.send("Hello");
 // });
