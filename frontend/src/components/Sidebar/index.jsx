@@ -7,7 +7,7 @@ import {
   Search,
   Settings,
 } from "@mui/icons-material";
-import "./Sidebar.css";
+import "src/components/Sidebar/Sidebar.css";
 
 const SIDEBARLISTITEM = [
   {
