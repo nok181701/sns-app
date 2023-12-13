@@ -1,7 +1,7 @@
 import "./Topbar.css";
 import { Chat, Notifications, Search } from "@mui/icons-material";
 
-export default function Topbar() {
+const Topbar = () => {
   return (
     <div className="topbarContainer">
       <div className="topbarLeft">
@@ -32,4 +32,6 @@ export default function Topbar() {
       </div>
     </div>
   );
-}
+};
+
+export default Topbar;
