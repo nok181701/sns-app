@@ -27,7 +27,7 @@ const Topbar = () => {
             <Notifications />
             <span className="topbarIconBadge">1</span>
           </div>
-          <img src={"/assets/person/1.jpeg"} alt="" className="topbarImg" />
+          <img src={"/assets/person/6.jpeg"} alt="" className="topbarImg" />
         </div>
       </div>
     </div>

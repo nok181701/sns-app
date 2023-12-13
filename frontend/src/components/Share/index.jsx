@@ -14,7 +14,7 @@ const Share = () => {
         <div className="shareWrapper">
           <div className="shareTop">
             <img
-              src="/assets/person/1.jpeg"
+              src="/assets/person/6.jpeg"
               alt=""
               className="shareProfileImg"
             />
