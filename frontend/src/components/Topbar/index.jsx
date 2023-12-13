@@ -1,27 +1,35 @@
-import React from "react";
+import "./Topbar.css";
+import { Chat, Notifications, Search } from "@mui/icons-material";
 
-const Topbar = () => {
+export default function Topbar() {
   return (
-    <div className="topbarConteiner">
+    <div className="topbarContainer">
       <div className="topbarLeft">
-        <span className="logo">SNS APP</span>
+        <span className="logo">SNS-APP</span>
       </div>
       <div className="topbarCenter">
-        <div className="serchbar">
+        <div className="searchbar">
+          <Search className="searchIcon" />
           <input
             type="text"
-            className="serchInput"
-            placeholder="探し物はなんですか？"
+            className="searchInput"
+            placeholder="探し物は何ですか？"
           />
         </div>
-        <div className="topbarRight">
-          <div className="topbarIconItem">1</div>
-          <div className="topbarIconItem">2</div>
+      </div>
+      <div className="topbarRight">
+        <div className="topbarIcons">
+          <div className="topbarIconItem">
+            <Chat />
+            <span className="topbarIconBadge">2</span>
+          </div>
+          <div className="topbarIconItem">
+            <Notifications />
+            <span className="topbarIconBadge">1</span>
+          </div>
+          <img src={"/assets/person/1.jpeg"} alt="" className="topbarImg" />
         </div>
-        <img src="/assets/person/1.jpeg" alt="" className="topbarImg" />
       </div>
     </div>
   );
-};
-
-export default Topbar;
+}
