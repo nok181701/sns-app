@@ -1,4 +1,7 @@
+import Online from "src/components/Online";
 import "src/components/Rightbar/Rightbar.css";
+import { Users } from "src/dummyData";
+
 const Rirhtbar = () => {
   return (
     <>
@@ -13,28 +16,9 @@ const Rirhtbar = () => {
           <img src="assets/ad.jpeg" alt="イベント画像" className="eventImg" />
           <h4 className="rightbarTitle">オンラインの友達</h4>
           <ul className="rightbarFriendList">
-            <li className="rightbarFriend">
-              <div className="rightbarProfileImgContainer">
-                <img
-                  src="assets/person/1.jpeg"
-                  alt="友達"
-                  className="rightbarProfileImg"
-                />
-                <span className="rightbarOnline"></span>
-              </div>
-              <span className="rightbarUserName">yamada</span>
-            </li>
-            <li className="rightbarFriend">
-              <div className="rightbarProfileImgContainer">
-                <img
-                  src="assets/person/2.jpeg"
-                  alt="友達"
-                  className="rightbarProfileImg"
-                />
-                <span className="rightbarOnline"></span>
-              </div>
-              <span className="rightbarUserName">Kevin</span>
-            </li>
+            {Users.map((user) => {
+              return <Online user={user} key={user.id} />;
+            })}
           </ul>
           <p className="promotionTitle">プロモーション広告</p>
           <img
