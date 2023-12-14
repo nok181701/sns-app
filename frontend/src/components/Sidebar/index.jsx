@@ -7,7 +7,9 @@ import {
   Search,
   Settings,
 } from "@mui/icons-material";
+import CloseFriend from "src/components/CloseFriend";
 import "src/components/Sidebar/Sidebar.css";
+import { Users } from "src/dummyData";
 
 const SIDEBARLISTITEM = [
   {
@@ -58,30 +60,9 @@ const Sidebar = () => {
           </ul>
           <hr className="sidebarHr" />
           <ul className="sidebarFriendList">
-            <li className="sidebarFriend">
-              <img
-                src="/assets/person/2.jpeg"
-                alt="友達のアイコン"
-                className="sidebarFriendImg"
-              />
-              <span className="sidebarFriendName">Kevin</span>
-            </li>
-            <li className="sidebarFriend">
-              <img
-                src="/assets/person/3.jpeg"
-                alt="友達のアイコン"
-                className="sidebarFriendImg"
-              />
-              <span className="sidebarFriendName">Michael</span>
-            </li>
-            <li className="sidebarFriend">
-              <img
-                src="/assets/person/4.jpeg"
-                alt="友達のアイコン"
-                className="sidebarFriendImg"
-              />
-              <span className="sidebarFriendName">Billie</span>
-            </li>
+            {Users.map((user) => {
+              return <CloseFriend user={user} key={user.id} />;
+            })}
           </ul>
         </div>
       </div>
