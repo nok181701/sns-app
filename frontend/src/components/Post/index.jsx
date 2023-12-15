@@ -4,6 +4,7 @@ import "src/components/Post/Post.css";
 import { useState } from "react";
 
 const Post = ({ post }) => {
+  const PUBLIC_FOLDER = process.env.REACT_APP_PUBLIC_FOLDER;
   const [like, setLike] = useState(post.like);
   const [isLiked, setIsLiked] = useState(false);
   const matchingUsers = Users.filter((user) => user.id === post.id);
@@ -22,7 +23,7 @@ const Post = ({ post }) => {
               <img
                 src={
                   matchingUsers.length > 0
-                    ? matchingUsers[0].profilePicture
+                    ? PUBLIC_FOLDER + matchingUsers[0].profilePicture
                     : "Unknown"
                 }
                 alt="プロフィール画像"
@@ -41,12 +42,16 @@ const Post = ({ post }) => {
           </div>
           <div className="postCenter">
             <span className="posText">{post.desc}</span>
-            <img src={post.photo} alt="投稿写真" className="postImg" />
+            <img
+              src={PUBLIC_FOLDER + post.photo}
+              alt="投稿写真"
+              className="postImg"
+            />
           </div>
           <div className="postBottom">
             <div className="postBottomLeft">
               <img
-                src="/assets/heart.png"
+                src={PUBLIC_FOLDER + "/heart.png"}
                 alt="いいね"
                 className="likeIkon"
                 onClick={handleLike}
