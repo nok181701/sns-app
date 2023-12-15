@@ -22,6 +22,6 @@ app.use("/api/auth", authRouter);
 app.use("/api/users", userRouter);
 app.use("/api/posts", postRouter);
 
-app.listen(3000, () => {
+app.listen(5000, () => {
   console.log("ポート3000で受付中...");
 });
