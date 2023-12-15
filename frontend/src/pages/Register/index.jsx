@@ -1,7 +1,7 @@
 import React from "react";
-import "src/pages/Login/Login.css";
+import "src/pages/Register/Register.css";
 
-const Login = () => {
+const Register = () => {
   return (
     <div className="login">
       <div className="loginWrapper">
@@ -11,16 +11,25 @@ const Login = () => {
         </div>
         <div className="loginRight">
           <div className="loginBox">
-            <p className="loginMsg">ログインはこちら</p>
+            <p className="loginMsg">新規登録はこちら</p>
             <input type="text" placeholder="Eメール" className="loginInput" />
+            <input
+              type="text"
+              placeholder="ユーザー名"
+              className="loginInput"
+            />
             <input
               type="text"
               placeholder="パスワード"
               className="loginInput"
             />
-            <button className="loginButton">ログイン</button>
-            <span className="loginForgot">パスワードを忘れた方へ</span>
-            <button className="loginRegisterButton">アカウント作成</button>
+            <input
+              type="text"
+              placeholder="確認用パスワード"
+              className="loginInput"
+            />
+            <button className="loginButton">サインアップ</button>
+            <button className="loginRegisterButton">ログイン</button>
           </div>
         </div>
       </div>
@@ -28,4 +37,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
