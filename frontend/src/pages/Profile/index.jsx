@@ -32,7 +32,7 @@ const Profile = () => {
             </div>
           </div>
           <div className="profileRightBottom">
-            <TimeLine />
+            <TimeLine username="IwaiNaoki" />
             <Rirhtbar profile />
           </div>
         </div>
