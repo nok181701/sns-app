@@ -1,7 +1,33 @@
-import React from "react";
 import "src/pages/Register/Register.css";
+import React, { useRef } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
+  const username = useRef();
+  const email = useRef();
+  const password = useRef();
+  const passwordConfirmation = useRef();
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (password.current.value !== passwordConfirmation.current.value) {
+      passwordConfirmation.current.setCustomValidity("パスワードが違います");
+    } else {
+      try {
+        const user = {
+          username: username.current.value,
+          email: email.current.value,
+          password: password.current.value,
+        };
+        await axios.post("auth/register", user);
+        navigate("/login");
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
   return (
     <div className="login">
       <div className="loginWrapper">
@@ -10,27 +36,46 @@ const Register = () => {
           <span className="loginDesc">さぁはじめてみよう！</span>
         </div>
         <div className="loginRight">
-          <div className="loginBox">
+          <form className="loginBox" onSubmit={handleSubmit}>
             <p className="loginMsg">新規登録はこちら</p>
-            <input type="text" placeholder="Eメール" className="loginInput" />
             <input
               type="text"
               placeholder="ユーザー名"
               className="loginInput"
+              required
+              autoComplete="username"
+              ref={username}
             />
             <input
-              type="text"
+              type="email"
+              placeholder="Eメール"
+              className="loginInput"
+              required
+              autoComplete="username"
+              ref={email}
+            />
+            <input
+              type="password"
               placeholder="パスワード"
               className="loginInput"
+              required
+              minLength="6"
+              autoComplete="current-password"
+              ref={password}
             />
             <input
-              type="text"
+              type="password"
               placeholder="確認用パスワード"
               className="loginInput"
+              required
+              autoComplete="current-password"
+              ref={passwordConfirmation}
             />
-            <button className="loginButton">サインアップ</button>
+            <button className="loginButton" type="submit">
+              サインアップ
+            </button>
             <button className="loginRegisterButton">ログイン</button>
-          </div>
+          </form>
         </div>
       </div>
     </div>
