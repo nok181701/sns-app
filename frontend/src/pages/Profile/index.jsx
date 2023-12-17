@@ -1,12 +1,30 @@
-import React from "react";
+import "src/pages/Profile/Profile.css";
 import Rirhtbar from "src/components/Rightbar";
 import Sidebar from "src/components/Sidebar";
 import TimeLine from "src/components/TimeLine";
 import Topbar from "src/components/Topbar";
-import "src/pages/Profile/Profile.css";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 const Profile = () => {
   const PUBLIC_FOLDER = process.env.REACT_APP_PUBLIC_FOLDER;
+
+  const [user, setUser] = useState({});
+  const username = useParams().username;
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const response = await axios.get(`/users`, {
+        params: {
+          username: username,
+        },
+      });
+      setUser(response.data);
+    };
+    fetchUser();
+  }, [username]);
+
   return (
     <>
       <Topbar />
@@ -16,24 +34,26 @@ const Profile = () => {
           <div className="profileRightTop">
             <div className="profileCover">
               <img
-                src={PUBLIC_FOLDER + "/post/3.jpeg"}
+                src={user.coverPicture || PUBLIC_FOLDER + "/post/3.jpeg"}
                 alt="背景画像"
                 className="profileCoverImg"
               />
               <img
-                src={PUBLIC_FOLDER + "/person/6.jpeg"}
+                src={
+                  user.profilePicture || PUBLIC_FOLDER + "/person/noAvatar.png"
+                }
                 alt="プロフィール画像"
                 className="profileUserImg"
               />
             </div>
             <div className="profileInfo">
-              <h4 className="profileInfoName">Iwai Naoki</h4>
-              <span className="prfileInfoDesc">26歳、Webエンジニアです。</span>
+              <h4 className="profileInfoName">{user.username}</h4>
+              <span className="prfileInfoDesc">{user.desc}</span>
             </div>
           </div>
           <div className="profileRightBottom">
-            <TimeLine username="IwaiNaoki" />
-            <Rirhtbar profile />
+            <TimeLine username={username} />
+            <Rirhtbar user={user} />
           </div>
         </div>
       </div>
