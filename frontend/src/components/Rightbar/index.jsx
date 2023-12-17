@@ -2,12 +2,12 @@ import HomeRightbar from "src/components/Rightbar/HomeRightbar";
 import ProfileRightbar from "src/components/Rightbar/ProfileRightbar";
 import "src/components/Rightbar/Rightbar.css";
 
-const Rightbar = ({ profile }) => {
+const Rightbar = ({ user }) => {
   return (
     <>
       <div className="rightbar">
         <div className="rightbarWrapper">
-          {profile ? <ProfileRightbar /> : <HomeRightbar />}
+          {user ? <ProfileRightbar /> : <HomeRightbar />}
         </div>
       </div>
     </>
