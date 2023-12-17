@@ -27,10 +27,19 @@ router.post("/login", async (req, res) => {
       email: req.body.email,
     });
     if (!user) return res.status(404).send("ユーザーが見つかりません");
-    const vailedPassword = user.password === req.body.password;
-    return vailedPassword
-      ? res.status(200).json(user)
-      : res.status(404).json("パスワードが違います。");
+
+    const validPassword = await bcrypt.compare(
+      req.body.password,
+      user.password
+    );
+
+    if (validPassword) {
+      // パスワードが一致する場合の処理
+      return res.status(200).json(user);
+    } else {
+      // パスワードが一致しない場合の処理
+      return res.status(404).json("パスワードが違います。");
+    }
   } catch (err) {
     return res.status(500).json(err);
   }
