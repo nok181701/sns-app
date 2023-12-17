@@ -8,13 +8,15 @@ const SHAREOPTIONS = [
   { img: () => <Analytics htmlColor="#d98080" />, text: "投票", color: "red" },
 ];
 const Share = () => {
+  const PUBLIC_FOLDER = process.env.REACT_APP_PUBLIC_FOLDER;
+
   return (
     <>
       <div className="share">
         <div className="shareWrapper">
           <div className="shareTop">
             <img
-              src="/assets/person/6.jpeg"
+              src={PUBLIC_FOLDER + "/person/noAvatar.png"}
               alt=""
               className="shareProfileImg"
             />

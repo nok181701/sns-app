@@ -10,12 +10,12 @@ const TimeLine = ({ username }) => {
   useEffect(() => {
     const fetchPost = async () => {
       const response = username
-        ? something //後で修正
+        ? await axios.get(`/posts/profile/${username}`) //後で修正
         : await axios.get("/posts/timeline/6576cd23aaededceb032c094");
       setPosts(response.data);
     };
     fetchPost();
-  }, []);
+  }, [username]);
 
   return (
     <>
