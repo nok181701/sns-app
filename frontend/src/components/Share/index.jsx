@@ -1,5 +1,8 @@
-import { Analytics, Face, Gif, Image } from "@mui/icons-material";
 import "src/components/Share/Share.css";
+import { Analytics, Face, Gif, Image } from "@mui/icons-material";
+import { useContext, useRef } from "react";
+import { AuthContext } from "src/state/AuthContext";
+import axios from "axios";
 
 const SHAREOPTIONS = [
   { img: () => <Image htmlColor="#2c517c" />, text: "写真", color: "red" },
@@ -9,6 +12,22 @@ const SHAREOPTIONS = [
 ];
 const Share = () => {
   const PUBLIC_FOLDER = process.env.REACT_APP_PUBLIC_FOLDER;
+  const { user } = useContext(AuthContext); //ログインしているユーザー
+  const desc = useRef();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const newPost = {
+      userId: user._id,
+      desc: desc.current.value,
+    };
+    try {
+      await axios.post("/posts", newPost);
+      window.location.reload();
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <>
@@ -16,7 +35,11 @@ const Share = () => {
         <div className="shareWrapper">
           <div className="shareTop">
             <img
-              src={PUBLIC_FOLDER + "/person/noAvatar.png"}
+              src={
+                user.profilePicture
+                  ? PUBLIC_FOLDER + user.profilePicture
+                  : PUBLIC_FOLDER + "/person/noAvatar.png"
+              }
               alt=""
               className="shareProfileImg"
             />
@@ -24,10 +47,11 @@ const Share = () => {
               type="text"
               className="shareInput"
               placeholder="今何してるの？"
+              ref={desc}
             />
             <hr className="shareHr" />
           </div>
-          <div className="shareButtons">
+          <form className="shareButtons" onSubmit={handleSubmit}>
             <div className="shareOptions">
               {SHAREOPTIONS.map((option, index) => {
                 const OptionImg = option.img;
@@ -39,8 +63,10 @@ const Share = () => {
                 );
               })}
             </div>
-            <button className="shareButton">投稿</button>
-          </div>
+            <button className="shareButton" type="submit">
+              投稿
+            </button>
+          </form>
         </div>
       </div>
     </>
