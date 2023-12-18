@@ -1,3 +1,5 @@
+import "src/components/Sidebar/Sidebar.css";
+import CloseFriend from "src/components/CloseFriend";
 import {
   Bookmark,
   Home,
@@ -7,49 +9,51 @@ import {
   Search,
   Settings,
 } from "@mui/icons-material";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
-import CloseFriend from "src/components/CloseFriend";
-import "src/components/Sidebar/Sidebar.css";
 import { Users } from "src/dummyData";
-
-const SIDEBARLISTITEM = [
-  {
-    icon: () => <Home />,
-    link: "/",
-    text: "ホーム",
-  },
-  {
-    icon: () => <Search />,
-    text: "検索",
-  },
-  {
-    icon: () => <Notifications />,
-    link: "/",
-    text: "通知",
-  },
-  {
-    icon: () => <MessageRounded />,
-    link: "/",
-    text: "メッセージ",
-  },
-  {
-    icon: () => <Bookmark />,
-    link: "/",
-    text: "ブックマーク",
-  },
-  {
-    icon: () => <Person />,
-    link: "/profile/IwaiNaoki",
-    text: "プロフィール",
-  },
-  {
-    icon: () => <Settings />,
-    link: "/",
-    text: "設定",
-  },
-];
+import { AuthContext } from "src/state/AuthContext";
 
 const Sidebar = () => {
+  const { user } = useContext(AuthContext);
+
+  const SIDEBARLISTITEM = [
+    {
+      icon: () => <Home />,
+      link: "/",
+      text: "ホーム",
+    },
+    {
+      icon: () => <Search />,
+      text: "検索",
+    },
+    {
+      icon: () => <Notifications />,
+      link: "/",
+      text: "通知",
+    },
+    {
+      icon: () => <MessageRounded />,
+      link: "/",
+      text: "メッセージ",
+    },
+    {
+      icon: () => <Bookmark />,
+      link: "/",
+      text: "ブックマーク",
+    },
+    {
+      icon: () => <Person />,
+      link: `/profile/${user.username}`,
+      text: "プロフィール",
+    },
+    {
+      icon: () => <Settings />,
+      link: "/",
+      text: "設定",
+    },
+  ];
+
   return (
     <>
       <div className="sidebar">
