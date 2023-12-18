@@ -72,7 +72,7 @@ router.put("/:id/like", async (req, res) => {
           likes: req.body.userId,
         },
       });
-      return res.status(403).json("いいねを外しました");
+      return res.status(200).json("いいねを外しました");
     }
   } catch (err) {
     res.status(500).json(err);
