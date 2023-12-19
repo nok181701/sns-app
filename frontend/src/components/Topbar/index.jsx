@@ -6,7 +6,7 @@ import { useContext } from "react";
 import { AuthContext } from "src/state/AuthContext";
 import { logoutCall } from "src/actionCalls";
 
-const Topbar = () => {
+const Topbar = ({ home }) => {
   const PUBLIC_FOLDER = process.env.REACT_APP_PUBLIC_FOLDER;
   const { user, dispatch } = useContext(AuthContext);
 
@@ -57,10 +57,12 @@ const Topbar = () => {
             />
           </Link>
         </div>
-        <div className="logout" onClick={logout}>
-          <p>ログアウト</p>
-          <LogoutIcon />
-        </div>
+        {home && (
+          <div className="logout" onClick={logout}>
+            <p>ログアウト</p>
+            <LogoutIcon />
+          </div>
+        )}
       </div>
     </div>
   );
