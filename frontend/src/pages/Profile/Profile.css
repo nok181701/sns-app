@@ -42,3 +42,19 @@
 .profileRightBottom {
   display: flex;
 }
+
+.followWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+}
+
+.followings {
+  font-weight: 550;
+  margin: 10px;
+}
+
+.followers {
+  font-weight: 550;
+}

@@ -4,12 +4,13 @@ import Sidebar from "src/components/Sidebar";
 import TimeLine from "src/components/TimeLine";
 import Topbar from "src/components/Topbar";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { AuthContext } from "src/state/AuthContext";
 
 const Profile = () => {
   const PUBLIC_FOLDER = process.env.REACT_APP_PUBLIC_FOLDER;
-
+  const { user: currentUser } = useContext(AuthContext);
   const [user, setUser] = useState({});
   const username = useParams().username;
 
@@ -40,8 +41,9 @@ const Profile = () => {
               />
               <img
                 src={
-                  PUBLIC_FOLDER + user.profilePicture ||
-                  PUBLIC_FOLDER + "/person/noAvatar.png"
+                  user.profilePicture
+                    ? PUBLIC_FOLDER + user.profilePicture
+                    : PUBLIC_FOLDER + "/person/noAvatar.png"
                 }
                 alt="プロフィール画像"
                 className="profileUserImg"
@@ -50,6 +52,10 @@ const Profile = () => {
             <div className="profileInfo">
               <h4 className="profileInfoName">{user.username}</h4>
               <span className="prfileInfoDesc">{user.desc}</span>
+              <div className="followWrapper">
+                <span className="followings">{`フォロー：${currentUser.followings.length}`}</span>
+                <span className="followers">{`フォロワー：${currentUser.followers.length}`}</span>
+              </div>
             </div>
           </div>
           <div className="profileRightBottom">
