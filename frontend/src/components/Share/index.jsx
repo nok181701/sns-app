@@ -29,6 +29,20 @@ const Share = () => {
       userId: user._id,
       desc: desc.current.value,
     };
+
+    if (file) {
+      const data = new FormData();
+      const fileName = Date.now() + file.name;
+      data.append("name", fileName);
+      data.append("file", file);
+      newPost.img = fileName;
+      try {
+        await axios.post("/upload", data);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
     try {
       await axios.post("/posts", newPost);
       window.location.reload();
@@ -65,7 +79,11 @@ const Share = () => {
                 const OptionImg = option.img;
                 return (
                   <label className="shareOption" key={index} htmlFor="file">
-                    {OptionImg && <OptionImg className="shareIcon" />}
+                    {OptionImg &&
+                      typeof OptionImg === "function" &&
+                      OptionImg() !== undefined && (
+                        <OptionImg className="shareIcon" />
+                      )}
                     <span className="shareOptionText">{option.text}</span>
                     {option.type === "file" && (
                       <input
