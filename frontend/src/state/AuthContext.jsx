@@ -20,17 +20,13 @@ export const AuthContextProvider = ({ children }) => {
       localStorage.setItem("user_timestamp", Date.now().toString());
     };
 
-    // ユーザーがログインしている場合、1時間ごとにデータを更新
     if (state.user) {
-      saveUserData(); // 初回実行
-      const intervalId = setInterval(saveUserData, 60 * 60 * 1000); // 1 hour
-
-      // コンポーネントがアンマウントされるときにクリア
-      return () => clearInterval(intervalId);
+      saveUserData();
+      const intervalId = setInterval(saveUserData, 60 * 60 * 1000);
+      return () => clearInterval();
     }
   }, [state.user]);
 
-  // 24時間以上経過したらローカルストレージから削除
   useEffect(() => {
     const expirationTimeInMilliseconds = 2 * 60 * 60 * 1000; // 2hours
     const storedTimestamp = localStorage.getItem("user_timestamp");
