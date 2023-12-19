@@ -1,13 +1,23 @@
 import "./Topbar.css";
+import LogoutIcon from "@mui/icons-material/Logout";
 import { Link } from "react-router-dom";
 import { Chat, Notifications, Search } from "@mui/icons-material";
 import { useContext } from "react";
 import { AuthContext } from "src/state/AuthContext";
+import { logoutCall } from "src/actionCalls";
 
 const Topbar = () => {
   const PUBLIC_FOLDER = process.env.REACT_APP_PUBLIC_FOLDER;
+  const { user, dispatch } = useContext(AuthContext);
 
-  const { user } = useContext(AuthContext);
+  const logout = () => {
+    // ローカルストレージからデータを削除
+    localStorage.removeItem("user");
+    localStorage.removeItem("user_timestamp");
+
+    logoutCall(dispatch);
+  };
+
   return (
     <div className="topbarContainer">
       <div className="topbarLeft">
@@ -46,6 +56,10 @@ const Topbar = () => {
               className="topbarImg"
             />
           </Link>
+        </div>
+        <div className="logout" onClick={logout}>
+          <p>ログアウト</p>
+          <LogoutIcon />
         </div>
       </div>
     </div>
