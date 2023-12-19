@@ -28,6 +28,10 @@ const Register = () => {
       }
     }
   };
+  const GoToLoginPage = () => {
+    navigate("/login");
+  };
+
   return (
     <div className="login">
       <div className="loginWrapper">
@@ -74,7 +78,13 @@ const Register = () => {
             <button className="loginButton" type="submit">
               サインアップ
             </button>
-            <button className="loginRegisterButton">ログイン</button>
+            <button
+              className="loginRegisterButton"
+              type="button"
+              onClick={GoToLoginPage}
+            >
+              ログインの方はこちらへ
+            </button>
           </form>
         </div>
       </div>
