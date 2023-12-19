@@ -69,9 +69,6 @@ const Post = ({ post }) => {
               />
               <span className="postLikeCounter">{`${like}人がいいねしました`}</span>
             </div>
-            <div className="postBottomRight">
-              <span className="postCommenText">{`${post.comment}コメント`}</span>
-            </div>
           </div>
         </div>
       </div>
