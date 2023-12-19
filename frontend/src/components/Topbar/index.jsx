@@ -11,7 +11,6 @@ const Topbar = ({ home }) => {
   const { user, dispatch } = useContext(AuthContext);
 
   const logout = () => {
-    // ローカルストレージからデータを削除
     localStorage.removeItem("user");
     localStorage.removeItem("user_timestamp");
 
