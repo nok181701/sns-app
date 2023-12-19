@@ -15,8 +15,34 @@ export const AuthContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AuthReducer, initialState);
 
   useEffect(() => {
-    localStorage.setItem("user", JSON.stringify(state.user));
+    const saveUserData = () => {
+      localStorage.setItem("user", JSON.stringify(state.user));
+      localStorage.setItem("user_timestamp", Date.now().toString());
+    };
+
+    // ユーザーがログインしている場合、1時間ごとにデータを更新
+    if (state.user) {
+      saveUserData(); // 初回実行
+      const intervalId = setInterval(saveUserData, 60 * 60 * 1000); // 1 hour
+
+      // コンポーネントがアンマウントされるときにクリア
+      return () => clearInterval(intervalId);
+    }
   }, [state.user]);
+
+  // 24時間以上経過したらローカルストレージから削除
+  useEffect(() => {
+    const expirationTimeInMilliseconds = 2 * 60 * 60 * 1000; // 2hours
+    const storedTimestamp = localStorage.getItem("user_timestamp");
+
+    if (
+      storedTimestamp &&
+      Date.now() - parseInt(storedTimestamp, 10) > expirationTimeInMilliseconds
+    ) {
+      localStorage.removeItem("user");
+      localStorage.removeItem("user_timestamp");
+    }
+  }, []);
 
   return (
     <AuthContext.Provider
