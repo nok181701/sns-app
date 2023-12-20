@@ -59,7 +59,7 @@ const Share = () => {
             <img
               src={
                 user.profilePicture
-                  ? PUBLIC_FOLDER + user.profilePicture
+                  ? PUBLIC_FOLDER + "/" + user.profilePicture
                   : PUBLIC_FOLDER + "/person/noAvatar.png"
               }
               alt=""
