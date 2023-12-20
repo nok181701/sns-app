@@ -1,8 +1,8 @@
-import { useContext, useEffect, useState } from "react";
+import "src/components/TimeLine/TimeLine.css";
 import Post from "src/components/Post";
 import Share from "src/components/Share";
-import "src/components/TimeLine/TimeLine.css";
 import axios from "axios";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "src/state/AuthContext";
 
 const TimeLine = ({ username }) => {
