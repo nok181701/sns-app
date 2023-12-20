@@ -41,7 +41,7 @@
   padding-top: 3px;
 }
 .sidebarHr {
-  margin: 25px 0;
+  margin: 25px 0 15px;
 }
 
 .sidebarFriendList {
@@ -54,4 +54,8 @@
   display: flex;
   align-items: center;
   margin-bottom: 15px;
+}
+
+.sidebarFriendTitle {
+  padding: 10px 10px 10px 0;
 }
