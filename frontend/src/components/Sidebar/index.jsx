@@ -75,6 +75,7 @@ const Sidebar = () => {
             })}
           </ul>
           <hr className="sidebarHr" />
+          <h4 className="sidebarFriendTitle">フォローしてみませんか？</h4>
           <ul className="sidebarFriendList">
             {Users.map((user) => {
               return <CloseFriend user={user} key={user.id} />;
