@@ -1,7 +1,7 @@
 import "src/components/Post/Post.css";
 import axios from "axios";
 import LongMenu from "src/components/Post/LongMenu";
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { format } from "timeago.js";
 import { AuthContext } from "src/state/AuthContext";
 
@@ -12,16 +12,6 @@ const Post = ({ post, setPosts, username }) => {
   const [user, setUser] = useState({}); //投稿したuser
   const { user: currentUser } = useContext(AuthContext); //ログインしているユーザー
 
-  const handleLike = async () => {
-    try {
-      await axios.put(`/posts/${post._id}/like`, { userId: currentUser._id });
-    } catch (err) {
-      console.log(err);
-    }
-    setLike((prevLike) => (isLiked ? prevLike - 1 : prevLike + 1));
-    setIsLiked(!isLiked);
-  };
-
   useEffect(() => {
     const fetchUser = async () => {
       const response = await axios.get(`/users/${post.userId}`);
@@ -29,6 +19,16 @@ const Post = ({ post, setPosts, username }) => {
     };
     fetchUser();
   }, [post.userId]);
+
+  const handleLike = useCallback(async () => {
+    try {
+      await axios.put(`/posts/${post._id}/like`, { userId: currentUser._id });
+    } catch (err) {
+      console.log(err);
+    }
+    setLike((prevLike) => (isLiked ? prevLike - 1 : prevLike + 1));
+    setIsLiked(!isLiked);
+  }, [isLiked, currentUser._id, post._id]);
 
   return (
     <>

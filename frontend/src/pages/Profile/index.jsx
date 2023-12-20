@@ -4,7 +4,7 @@ import Sidebar from "src/components/Sidebar";
 import TimeLine from "src/components/TimeLine";
 import Topbar from "src/components/Topbar";
 import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "src/state/AuthContext";
 
@@ -14,9 +14,6 @@ const Profile = () => {
   const [user, setUser] = useState({});
   const username = useParams().username;
   const navigate = useNavigate();
-  const GoToLoginPage = () => {
-    navigate("/register");
-  };
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -30,6 +27,10 @@ const Profile = () => {
     fetchUser();
   }, [username]);
 
+  const GoToLoginPage = useCallback(() => {
+    navigate("/register");
+  }, [navigate]);
+
   return (
     <>
       {currentUser ? (
@@ -41,7 +42,9 @@ const Profile = () => {
               <div className="profileRightTop">
                 <div className="profileCover">
                   <img
-                    src={user.coverPicture || PUBLIC_FOLDER + "/post/3.jpeg"}
+                    src={
+                      user.coverPicture || PUBLIC_FOLDER + "/post/default.jpeg"
+                    }
                     alt="背景画像"
                     className="profileCoverImg"
                   />
