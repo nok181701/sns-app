@@ -38,7 +38,7 @@ const ProfileRightbar = () => {
                 <img
                   src={
                     friend.profilePicture
-                      ? PUBLIC_FOLDER + user.profilePicture
+                      ? PUBLIC_FOLDER + "/" + friend.profilePicture
                       : PUBLIC_FOLDER + "/person/noAvatar.png"
                   }
                   alt=""
