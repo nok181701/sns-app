@@ -12,7 +12,7 @@ const Profile = () => {
   const PUBLIC_FOLDER = process.env.REACT_APP_PUBLIC_FOLDER;
   const { user: currentUser } = useContext(AuthContext);
   const [user, setUser] = useState({});
-  const username = useParams().username;
+  const username = useParams().username; //paramのuserName
   const navigate = useNavigate();
 
   useEffect(() => {
