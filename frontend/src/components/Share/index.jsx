@@ -17,6 +17,7 @@ const SHAREOPTIONS = [
   { img: () => <Face htmlColor="#d69b85" />, text: "気持ち", color: "red" },
   { img: () => <Analytics htmlColor="#d98080" />, text: "投票", color: "red" },
 ];
+
 const Share = () => {
   const PUBLIC_FOLDER = process.env.REACT_APP_PUBLIC_FOLDER;
   const { user } = useContext(AuthContext); //ログインしているユーザー
