@@ -33,8 +33,13 @@ router.put("/:id", async (req, res) => {
 router.delete("/:id", async (req, res) => {
   try {
     const prevPost = await Post.findById(req.params.id);
-    const currentPost = req.body;
-    if (prevPost.userId === currentPost.userId) {
+    const userIdFromHeader = req.headers["user-id"];
+
+    if (!prevPost) {
+      return res.status(404).json("投稿が見つかりません");
+    }
+
+    if (prevPost.userId === userIdFromHeader) {
       await prevPost.deleteOne();
       return res.status(200).json("投稿を削除しました");
     } else {
