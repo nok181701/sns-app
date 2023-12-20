@@ -6,7 +6,7 @@ import { useContext } from "react";
 import { AuthContext } from "src/state/AuthContext";
 import { logoutCall } from "src/actionCalls";
 
-const Topbar = ({ home }) => {
+const Topbar = () => {
   const PUBLIC_FOLDER = process.env.REACT_APP_PUBLIC_FOLDER;
   const { user, dispatch } = useContext(AuthContext);
 
@@ -48,7 +48,7 @@ const Topbar = ({ home }) => {
             <img
               src={
                 user.profilePicture
-                  ? PUBLIC_FOLDER + user.profilePicture
+                  ? PUBLIC_FOLDER + "/" + user.profilePicture
                   : PUBLIC_FOLDER + "/person/noAvatar.png"
               }
               alt=""
@@ -56,12 +56,10 @@ const Topbar = ({ home }) => {
             />
           </Link>
         </div>
-        {home && (
-          <div className="logout" onClick={logout}>
-            <p>ログアウト</p>
-            <LogoutIcon />
-          </div>
-        )}
+        <div className="logout" onClick={logout}>
+          <p>ログアウト</p>
+          <LogoutIcon />
+        </div>
       </div>
     </div>
   );
