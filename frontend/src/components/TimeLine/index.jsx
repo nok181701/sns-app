@@ -14,11 +14,11 @@ const TimeLine = ({ username }) => {
       const response = username
         ? await axios.get(`/posts/profile/${username}`)
         : await axios.get(`/posts/timeline/${user._id}`);
-      setPosts(
-        response.data.sort((post1, post2) => {
-          return new Date(post2.createdAt) - new Date(post1.createdAt);
-        })
-      );
+
+      const sortedPosts = response.data.sort((post1, post2) => {
+        return new Date(post2.createdAt) - new Date(post1.createdAt);
+      });
+      setPosts(sortedPosts);
     };
     fetchPost();
   }, [username, user._id]);
@@ -29,7 +29,14 @@ const TimeLine = ({ username }) => {
         <div className="timelineWrapper">
           <Share />
           {posts.map((post) => {
-            return <Post post={post} key={post._id} />;
+            return (
+              <Post
+                post={post}
+                setPosts={setPosts}
+                key={post._id}
+                username={username}
+              />
+            );
           })}
         </div>
       </div>

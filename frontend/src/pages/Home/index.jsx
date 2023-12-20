@@ -6,7 +6,7 @@ import "src/pages/Home/Home.css";
 const Home = () => {
   return (
     <>
-      <Topbar home />
+      <Topbar />
       <div className="homeContainer">
         <Sidebar />
         <TimeLine />
