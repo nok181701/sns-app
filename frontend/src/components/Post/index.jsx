@@ -4,6 +4,7 @@ import LongMenu from "src/components/Post/LongMenu";
 import { useCallback, useContext, useEffect, useState } from "react";
 import { format } from "timeago.js";
 import { AuthContext } from "src/state/AuthContext";
+import { Link } from "react-router-dom";
 
 const Post = ({ post, setPosts, username }) => {
   const PUBLIC_FOLDER = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -11,13 +12,15 @@ const Post = ({ post, setPosts, username }) => {
   const [isLiked, setIsLiked] = useState(false);
   const [user, setUser] = useState({}); //投稿したuser
   const { user: currentUser } = useContext(AuthContext); //ログインしているユーザー
+  const [_userName, _setUserName] = useState(""); //postからusernameを取得
 
-  useEffect(() => {
-    const fetchUser = async () => {
+  const getUserName = useCallback(async () => {
+    try {
       const response = await axios.get(`/users/${post.userId}`);
-      setUser(response.data);
-    };
-    fetchUser();
+      _setUserName(response.data.username);
+    } catch (error) {
+      console.error(error);
+    }
   }, [post.userId]);
 
   const handleLike = useCallback(async () => {
@@ -30,21 +33,33 @@ const Post = ({ post, setPosts, username }) => {
     setIsLiked(!isLiked);
   }, [isLiked, currentUser._id, post._id]);
 
+  useEffect(() => {
+    const fetchUser = async () => {
+      const response = await axios.get(`/users/${post.userId}`);
+      setUser(response.data);
+      getUserName();
+    };
+    fetchUser();
+  }, [post.userId, getUserName]);
+
   return (
     <>
       <div className="post">
         <div className="postWrapper">
           <div className="postTop">
             <div className="postTopLeft">
-              <img
-                src={
-                  user.profilePicture
-                    ? PUBLIC_FOLDER + "/" + user.profilePicture
-                    : PUBLIC_FOLDER + "/person/noAvatar.png"
-                }
-                alt="プロフィール画像"
-                className="postProfileImg"
-              />
+              <Link to={`/profile/${_userName}`}>
+                <img
+                  src={
+                    user.profilePicture
+                      ? PUBLIC_FOLDER + "/" + user.profilePicture
+                      : PUBLIC_FOLDER + "/person/noAvatar.png"
+                  }
+                  alt="プロフィール画像"
+                  className="postProfileImg"
+                  onClick={getUserName}
+                />
+              </Link>
               <span className="postuserName">{user.username}</span>
               <span className="postDate">{format(post.createdAt)}</span>
             </div>
