@@ -62,15 +62,17 @@ const Sidebar = () => {
             {SIDEBARLISTITEM.map((item, index) => {
               const IconComponent = item.icon;
               return (
-                <li className="sidebarListItem" key={index}>
-                  {IconComponent && <IconComponent className="sidebarIcon" />}
-                  <Link
-                    to={item.link}
-                    style={{ textDecoration: "none", color: "black" }}
-                  >
+                <Link
+                  to={item.link}
+                  style={{ textDecoration: "none", color: "black" }}
+                  key={index}
+                >
+                  <li className="sidebarListItem">
+                    {IconComponent && <IconComponent className="sidebarIcon" />}
+
                     <span className="sidebarListItemText">{item.text}</span>
-                  </Link>
-                </li>
+                  </li>
+                </Link>
               );
             })}
           </ul>
