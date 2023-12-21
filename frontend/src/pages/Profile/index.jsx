@@ -62,8 +62,24 @@ const Profile = () => {
                   <h4 className="profileInfoName">{user.username}</h4>
                   <span className="prfileInfoDesc">{user.desc}</span>
                   <div className="followWrapper">
-                    <span className="followings">{`フォロー：${currentUser.followings.length}`}</span>
-                    <span className="followers">{`フォロワー：${currentUser.followers.length}`}</span>
+                    <span className="followings">
+                      {currentUser.username === user.username
+                        ? `フォロー：${currentUser.followings.length}`
+                        : `フォロー：${
+                            Array.isArray(user.followings)
+                              ? user.followings.length
+                              : 0
+                          }`}
+                    </span>
+                    <span className="followers">
+                      {currentUser.username === user.username
+                        ? `フォロワー：${currentUser.followers.length}`
+                        : `フォロワー：${
+                            Array.isArray(user.followers)
+                              ? user.followers.length
+                              : 0
+                          }`}
+                    </span>
                   </div>
                 </div>
               </div>
