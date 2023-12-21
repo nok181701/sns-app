@@ -3,7 +3,6 @@ import axios from "axios";
 import { Analytics, Face, Gif, Image } from "@mui/icons-material";
 import { useContext, useRef, useState } from "react";
 import { AuthContext } from "src/state/AuthContext";
-import { useParams } from "react-router-dom";
 
 const SHAREOPTIONS = [
   {
@@ -24,7 +23,6 @@ const Share = () => {
   const { user } = useContext(AuthContext); //ログインしているユーザー
   const desc = useRef();
   const [file, setFile] = useState(null);
-  const username = useParams().username;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -55,59 +53,57 @@ const Share = () => {
   };
   return (
     <>
-      {user.username === username ? (
-        <div className="share">
-          <div className="shareWrapper">
-            <div className="shareTop">
-              <img
-                src={
-                  user.profilePicture
-                    ? PUBLIC_FOLDER + "/" + user.profilePicture
-                    : PUBLIC_FOLDER + "/person/noAvatar.png"
-                }
-                alt=""
-                className="shareProfileImg"
-              />
-              <input
-                type="text"
-                className="shareInput"
-                placeholder="今何してるの？"
-                ref={desc}
-              />
-              <hr className="shareHr" />
-            </div>
-            <form className="shareButtons" onSubmit={handleSubmit}>
-              <div className="shareOptions">
-                {SHAREOPTIONS.map((option, index) => {
-                  const OptionImg = option.img;
-                  return (
-                    <label className="shareOption" key={index} htmlFor="file">
-                      {OptionImg &&
-                        typeof OptionImg === "function" &&
-                        OptionImg() !== undefined && (
-                          <OptionImg className="shareIcon" />
-                        )}
-                      <span className="shareOptionText">{option.text}</span>
-                      {option.type === "file" && (
-                        <input
-                          type={option.type}
-                          id={option.id}
-                          accept={option.accept}
-                          style={{ display: "none" }}
-                          onChange={(e) => setFile(e.target.files[0])}
-                        />
-                      )}
-                    </label>
-                  );
-                })}
-              </div>
-              <button className="shareButton" type="submit">
-                投稿
-              </button>
-            </form>
+      <div className="share">
+        <div className="shareWrapper">
+          <div className="shareTop">
+            <img
+              src={
+                user.profilePicture
+                  ? PUBLIC_FOLDER + "/" + user.profilePicture
+                  : PUBLIC_FOLDER + "/person/noAvatar.png"
+              }
+              alt=""
+              className="shareProfileImg"
+            />
+            <input
+              type="text"
+              className="shareInput"
+              placeholder="今何してるの？"
+              ref={desc}
+            />
+            <hr className="shareHr" />
           </div>
+          <form className="shareButtons" onSubmit={handleSubmit}>
+            <div className="shareOptions">
+              {SHAREOPTIONS.map((option, index) => {
+                const OptionImg = option.img;
+                return (
+                  <label className="shareOption" key={index} htmlFor="file">
+                    {OptionImg &&
+                      typeof OptionImg === "function" &&
+                      OptionImg() !== undefined && (
+                        <OptionImg className="shareIcon" />
+                      )}
+                    <span className="shareOptionText">{option.text}</span>
+                    {option.type === "file" && (
+                      <input
+                        type={option.type}
+                        id={option.id}
+                        accept={option.accept}
+                        style={{ display: "none" }}
+                        onChange={(e) => setFile(e.target.files[0])}
+                      />
+                    )}
+                  </label>
+                );
+              })}
+            </div>
+            <button className="shareButton" type="submit">
+              投稿
+            </button>
+          </form>
         </div>
-      ) : null}
+      </div>
     </>
   );
 };
