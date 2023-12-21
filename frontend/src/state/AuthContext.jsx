@@ -23,7 +23,7 @@ export const AuthContextProvider = ({ children }) => {
     if (state.user) {
       saveUserData();
       const intervalId = setInterval(saveUserData, 60 * 60 * 1000);
-      return () => clearInterval();
+      return () => clearInterval(intervalId);
     }
   }, [state.user]);
 
