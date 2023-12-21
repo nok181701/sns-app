@@ -27,7 +27,9 @@ const TimeLine = ({ username }) => {
     <>
       <div className="timeline">
         <div className="timelineWrapper">
-          <Share />
+          {user.username === username || username === undefined ? (
+            <Share />
+          ) : null}
           {posts.map((post) => {
             return (
               <Post
