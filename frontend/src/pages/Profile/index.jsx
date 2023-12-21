@@ -4,16 +4,15 @@ import Sidebar from "src/components/Sidebar";
 import TimeLine from "src/components/TimeLine";
 import Topbar from "src/components/Topbar";
 import axios from "axios";
-import React, { useCallback, useContext, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { AuthContext } from "src/state/AuthContext";
 
 const Profile = () => {
   const PUBLIC_FOLDER = process.env.REACT_APP_PUBLIC_FOLDER;
   const { user: currentUser } = useContext(AuthContext);
   const [user, setUser] = useState({});
-  const username = useParams().username; //paramのuserName
-  const navigate = useNavigate();
+  const { username } = useParams(); //paramのuserName
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -27,72 +26,64 @@ const Profile = () => {
     fetchUser();
   }, [username]);
 
-  const GoToLoginPage = useCallback(() => {
-    navigate("/register");
-  }, [navigate]);
-
   return (
     <>
-      {currentUser ? (
-        <div>
-          <Topbar />
-          <div className="profile">
-            <Sidebar />
-            <div className="profileRight">
-              <div className="profileRightTop">
-                <div className="profileCover">
-                  <img
-                    src={
-                      user.coverPicture || PUBLIC_FOLDER + "/post/default.jpeg"
-                    }
-                    alt="背景画像"
-                    className="profileCoverImg"
-                  />
-                  <img
-                    src={
-                      user.profilePicture
-                        ? PUBLIC_FOLDER + "/" + user.profilePicture
-                        : PUBLIC_FOLDER + "/person/noAvatar.png"
-                    }
-                    alt="プロフィール画像"
-                    className="profileUserImg"
-                  />
-                </div>
-                <div className="profileInfo">
-                  <h4 className="profileInfoName">{user.username}</h4>
-                  <span className="prfileInfoDesc">{user.desc}</span>
-                  <div className="followWrapper">
-                    <span className="followings">
-                      {currentUser.username === user.username
-                        ? `フォロー：${currentUser.followings.length}`
-                        : `フォロー：${
-                            Array.isArray(user.followings)
-                              ? user.followings.length
-                              : 0
-                          }`}
-                    </span>
-                    <span className="followers">
-                      {currentUser.username === user.username
-                        ? `フォロワー：${currentUser.followers.length}`
-                        : `フォロワー：${
-                            Array.isArray(user.followers)
-                              ? user.followers.length
-                              : 0
-                          }`}
-                    </span>
-                  </div>
+      <div>
+        <Topbar />
+        <div className="profile">
+          <Sidebar />
+          <div className="profileRight">
+            <div className="profileRightTop">
+              <div className="profileCover">
+                <img
+                  src={
+                    user.coverPicture || PUBLIC_FOLDER + "/post/default.jpeg"
+                  }
+                  alt="背景画像"
+                  className="profileCoverImg"
+                />
+                <img
+                  src={
+                    user.profilePicture
+                      ? PUBLIC_FOLDER + "/" + user.profilePicture
+                      : PUBLIC_FOLDER + "/person/noAvatar.png"
+                  }
+                  alt="プロフィール画像"
+                  className="profileUserImg"
+                />
+              </div>
+              <div className="profileInfo">
+                <h4 className="profileInfoName">{user.username}</h4>
+                <span className="prfileInfoDesc">{user.desc}</span>
+                <div className="followWrapper">
+                  <span className="followings">
+                    {currentUser.username === user.username
+                      ? `フォロー：${currentUser.followings.length}`
+                      : `フォロー：${
+                          Array.isArray(user.followings)
+                            ? user.followings.length
+                            : 0
+                        }`}
+                  </span>
+                  <span className="followers">
+                    {currentUser.username === user.username
+                      ? `フォロワー：${currentUser.followers.length}`
+                      : `フォロワー：${
+                          Array.isArray(user.followers)
+                            ? user.followers.length
+                            : 0
+                        }`}
+                  </span>
                 </div>
               </div>
-              <div className="profileRightBottom">
-                <TimeLine username={username} />
-                <Rirhtbar user={user} />
-              </div>
+            </div>
+            <div className="profileRightBottom">
+              <TimeLine username={username} />
+              <Rirhtbar user={user} />
             </div>
           </div>
         </div>
-      ) : (
-        GoToLoginPage()
-      )}
+      </div>
     </>
   );
 };
