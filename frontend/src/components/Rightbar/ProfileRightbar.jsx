@@ -2,26 +2,59 @@ import "src/components/Rightbar/ProfileRightbar.css";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "src/state/AuthContext";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
 const ProfileRightbar = () => {
   const PUBLIC_FOLDER = process.env.REACT_APP_PUBLIC_FOLDER;
   const { user } = useContext(AuthContext);
-  const [closeFriends, setCloseFriends] = useState([]);
+  const [, setprofileUser] = useState([]);
+  const { username } = useParams(); //paramのuserName
+  const [friends, setFriends] = useState([]);
 
-  useEffect(() => {
-    const getCloseFriends = async () => {
-      if (user.followers && user.followers.length > 0) {
-        const closeFriendsPromises = user.followers.map(async (followerId) => {
-          const response = await axios.get(`/users/${followerId}`);
-          return response.data;
+  const findFriends = async (user) => {
+    const { followers, followings } = user || {};
+    if (followers && followings) {
+      const includeFriends = followers.filter((friend) =>
+        followings.includes(friend)
+      );
+      try {
+        const friendResponse = await axios.get("/users", {
+          params: {
+            userIds: includeFriends,
+          },
         });
-        const friendsData = await Promise.all(closeFriendsPromises);
-        setCloseFriends(friendsData);
+        const friendsData = friendResponse.data;
+        setFriends([...friendsData]);
+        return friendsData;
+      } catch (err) {
+        console.error("Failed to fetch friends:", err);
+        return [];
+      }
+    }
+    return [];
+  };
+  useEffect(() => {
+    let isMounted = true;
+    const fetchUser = async () => {
+      try {
+        const response = await axios.get(`/users`, {
+          params: {
+            username: username,
+          },
+        });
+        if (isMounted) {
+          setprofileUser(response.data);
+          findFriends(response.data);
+        }
+      } catch (error) {
+        console.error("Failed to fetch user:", error);
       }
     };
-    getCloseFriends();
-  }, [user.followers]);
-
+    fetchUser();
+    return () => {
+      isMounted = false;
+    };
+  }, [username]);
   return (
     <>
       <h4 className="rightbarTitle">ユーザー情報</h4>
@@ -30,9 +63,9 @@ const ProfileRightbar = () => {
           <span className="rightbarInfoKey">出身:</span>
           <span className="rightbarInfoKey">{user.city}</span>
         </div>
-        <h4 className="rightbarTitle">あなたをフォローしている人</h4>
+        <h4 className="rightbarTitle">あなたのお友達</h4>
         <div className="rightbarFollowings">
-          {closeFriends.map((friend) => {
+          {friends.map((friend) => {
             return (
               <div key={friend._id} className="rightbarFollowing">
                 <img
