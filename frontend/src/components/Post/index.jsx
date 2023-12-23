@@ -70,7 +70,7 @@ const Post = ({ post, setPosts, username }) => {
           <div className="postCenter">
             <span className="posText">{post.desc}</span>
             <img
-              src={post.img ? PUBLIC_FOLDER + post.img : ""}
+              src={post.img ? PUBLIC_FOLDER + "/" + post.img : ""}
               alt=""
               className="postImg"
             />
