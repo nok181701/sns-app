@@ -14,14 +14,27 @@ router.get("/:id", async (req, res) => {
 
 //クエリでユーザー情報取得
 router.get("/", async (req, res) => {
-  const userId = req.query.userId;
+  const userIds = req.query.userIds;
   const username = req.query.username;
   try {
-    const user = userId
-      ? await User.findById(userId)
-      : await User.findOne({ username });
-    const { password, updatedAt, ...other } = user._doc;
-    return res.status(200).json(other);
+    // 複数のユーザーIDが指定されている場合
+    if (userIds && userIds.length > 0) {
+      const users = await User.find({ _id: { $in: userIds } });
+      const userData = users.map((user) => {
+        const { password, updatedAt, ...other } = user._doc;
+        console.log(other);
+        return other;
+      });
+      return res.status(200).json(userData);
+    } else if (username) {
+      // ユーザー名が指定されている場合
+      const user = await User.findOne({ username });
+      if (user) {
+        const { password, updatedAt, ...other } = user._doc;
+        return res.status(200).json(other);
+      }
+    }
+    return res.status(400).json("Invalid request");
   } catch (err) {
     return res.status(500).json(`取得できませんでした：${err}`);
   }
