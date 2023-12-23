@@ -10,11 +10,11 @@ const Topbar = ({ home }) => {
   const PUBLIC_FOLDER = process.env.REACT_APP_PUBLIC_FOLDER;
   const { user, dispatch } = useContext(AuthContext);
 
-  const logout = () => {
+  const logout = async () => {
     localStorage.removeItem("user");
     localStorage.removeItem("user_timestamp");
 
-    logoutCall(dispatch);
+    await logoutCall(dispatch);
   };
 
   return (
@@ -57,7 +57,7 @@ const Topbar = ({ home }) => {
           </Link>
         </div>
         {home ? (
-          <div className="logout" onClick={() => logout()}>
+          <div className="logout" onClick={logout}>
             <p>ログアウト</p>
             <LogoutIcon />
           </div>
