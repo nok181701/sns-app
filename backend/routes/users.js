@@ -22,7 +22,6 @@ router.get("/", async (req, res) => {
       const users = await User.find({ _id: { $in: userIds } });
       const userData = users.map((user) => {
         const { password, updatedAt, ...other } = user._doc;
-        console.log(other);
         return other;
       });
       return res.status(200).json(userData);
