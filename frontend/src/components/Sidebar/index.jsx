@@ -14,7 +14,7 @@ import { Link } from "react-router-dom";
 import { Users } from "src/dummyData";
 import { AuthContext } from "src/state/AuthContext";
 
-const Sidebar = () => {
+const Sidebar = ({ profile }) => {
   const { user } = useContext(AuthContext);
 
   const SIDEBARLISTITEM = [
@@ -77,12 +77,24 @@ const Sidebar = () => {
             })}
           </ul>
           <hr className="sidebarHr" />
-          <h4 className="sidebarFriendTitle">フォローしてみませんか？</h4>
-          <ul className="sidebarFriendList">
-            {Users.map((user) => {
-              return <CloseFriend user={user} key={user.id} />;
-            })}
-          </ul>
+          {!profile ? (
+            <>
+              <h4 className="sidebarFriendTitle">フォローしてみませんか？</h4>
+              <ul className="sidebarFriendList">
+                {Users.map((user) => {
+                  return (
+                    <Link
+                      to={`/profile/${user.username}`}
+                      className="sidebarFriendLinks"
+                      key={user.id}
+                    >
+                      <CloseFriend user={user} />
+                    </Link>
+                  );
+                })}
+              </ul>
+            </>
+          ) : null}
         </div>
       </div>
     </>
