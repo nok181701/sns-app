@@ -1,7 +1,7 @@
 import "src/components/Rightbar/ProfileRightbar.css";
-import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "src/state/AuthContext";
 import axios from "axios";
+import { useCallback, useContext, useEffect, useState } from "react";
+import { AuthContext } from "src/state/AuthContext";
 import { useParams } from "react-router-dom";
 
 const ProfileRightbar = () => {
@@ -11,12 +11,13 @@ const ProfileRightbar = () => {
   const { username } = useParams(); //paramのuserName
   const [friends, setFriends] = useState([]);
 
-  const findFriends = async (user) => {
+  const findFriends = useCallback(async (user) => {
     const { followers, followings } = user || {};
     if (followers && followings) {
       const includeFriends = followers.filter((friend) =>
         followings.includes(friend)
       );
+      if (includeFriends.length === 0) return;
       try {
         const friendResponse = await axios.get("/users", {
           params: {
@@ -27,12 +28,13 @@ const ProfileRightbar = () => {
         setFriends([...friendsData]);
         return friendsData;
       } catch (err) {
-        console.error("Failed to fetch friends:", err);
+        console.error("お友達がいません。", err);
         return [];
       }
     }
     return [];
-  };
+  }, []);
+
   useEffect(() => {
     let isMounted = true;
     const fetchUser = async () => {
@@ -54,7 +56,8 @@ const ProfileRightbar = () => {
     return () => {
       isMounted = false;
     };
-  }, [username]);
+  }, [username, findFriends]);
+
   return (
     <>
       <h4 className="rightbarTitle">ユーザー情報</h4>
@@ -63,7 +66,11 @@ const ProfileRightbar = () => {
           <span className="rightbarInfoKey">出身:</span>
           <span className="rightbarInfoKey">{user.city}</span>
         </div>
-        <h4 className="rightbarTitle">あなたのお友達</h4>
+        {friends.length !== 0 ? (
+          <h4 className="rightbarTitle">友だち</h4>
+        ) : (
+          <h4 className="rightbarTitle">まだお友だちはいません</h4>
+        )}
         <div className="rightbarFollowings">
           {friends.map((friend) => {
             return (
