@@ -58,3 +58,18 @@
 .followers {
   font-weight: 550;
 }
+
+.followButton {
+  background-color: #2c517c;
+  border-radius: 10px;
+  color: white;
+  border: none;
+}
+
+.followButtonText {
+  padding: 5px;
+}
+
+.followButton:hover {
+  opacity: 0.9;
+}

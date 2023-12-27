@@ -86,7 +86,8 @@ router.put("/:id/follow", async (req, res) => {
             followings: req.params.id,
           },
         });
-        return res.status(200).json("フォローしました");
+        const updatedUser = await User.findById(req.body.userId);
+        res.status(200).json(updatedUser);
       } else {
         return res.status(403).json("すでにこのユーザーをフォローしています");
       }

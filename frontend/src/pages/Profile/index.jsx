@@ -10,9 +10,14 @@ import { AuthContext } from "src/state/AuthContext";
 
 const Profile = () => {
   const PUBLIC_FOLDER = process.env.REACT_APP_PUBLIC_FOLDER;
-  const { user: currentUser } = useContext(AuthContext);
+  const { user: currentUser, dispatch } = useContext(AuthContext);
   const [user, setUser] = useState({});
   const { username } = useParams(); //paramのuserName
+  const [followingsCount, setFollowingsCount] = useState(
+    currentUser.followings.length
+  );
+  const [followersCount] = useState(currentUser.followers.length);
+  const [isFollow, setIsFollow] = useState(currentUser.isFollow);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -24,14 +29,53 @@ const Profile = () => {
       setUser(response.data);
     };
     fetchUser();
-  }, [username]);
+  }, [username, followingsCount, followersCount, currentUser]);
+
+  useEffect(() => {
+    if (currentUser.followings.includes(user._id)) {
+      const storedDataString = localStorage.getItem("user");
+      const storedData = JSON.parse(storedDataString) || {};
+
+      const newIsFollowValue = currentUser.followings.includes(user._id);
+      setIsFollow(newIsFollowValue);
+
+      storedData.isFollow = newIsFollowValue;
+      localStorage.setItem("user", JSON.stringify(storedData));
+    }
+    return;
+  }, [currentUser.followings, user._id]);
+
+  const follow = async () => {
+    try {
+      const response = await axios.put(`/users/${user._id}/follow`, {
+        userId: currentUser._id,
+      });
+      const updatedUser = response.data;
+      dispatch(updatedUser);
+      localStorage.setItem("user", JSON.stringify(updatedUser));
+      setFollowingsCount((prevState) => prevState + 1);
+      alert("フォローしました");
+      window.location.reload();
+      setIsFollow((prevState) => {
+        const newFollowState = !prevState;
+        localStorage.setItem(
+          "user",
+          JSON.stringify({ ...updatedUser, isFollow: newFollowState })
+        );
+        return newFollowState;
+      });
+      return response;
+    } catch (e) {
+      console.log("既にフォローしています。");
+    }
+  };
 
   return (
     <>
       <div>
         <Topbar />
         <div className="profile">
-          <Sidebar />
+          <Sidebar profile />
           <div className="profileRight">
             <div className="profileRightTop">
               <div className="profileCover">
@@ -58,7 +102,7 @@ const Profile = () => {
                 <div className="followWrapper">
                   <span className="followings">
                     {currentUser.username === user.username
-                      ? `フォロー：${currentUser.followings.length}`
+                      ? `フォロー：${followingsCount}`
                       : `フォロー：${
                           Array.isArray(user.followings)
                             ? user.followings.length
@@ -67,7 +111,7 @@ const Profile = () => {
                   </span>
                   <span className="followers">
                     {currentUser.username === user.username
-                      ? `フォロワー：${currentUser.followers.length}`
+                      ? `フォロワー：${followersCount}`
                       : `フォロワー：${
                           Array.isArray(user.followers)
                             ? user.followers.length
@@ -75,6 +119,15 @@ const Profile = () => {
                         }`}
                   </span>
                 </div>
+                {currentUser.username !== username ? (
+                  <button onClick={follow} className="followButton">
+                    {isFollow ? (
+                      <p className="followButtonText">フォロー中</p>
+                    ) : (
+                      <p className="followButtonText">フォローする</p>
+                    )}
+                  </button>
+                ) : null}
               </div>
             </div>
             <div className="profileRightBottom">
