@@ -8,7 +8,12 @@ const mongoose = require("mongoose");
 const path = require("path");
 const cors = require("cors");
 require("dotenv").config();
-app.use(cors());
+const corsOptions = {
+  origin: "https://sns-app-frontend.vercel.app",
+  methods: "POST", // 許可するメソッドを制限する場合
+  optionsSuccessStatus: 204,
+};
+app.use(cors(corsOptions));
 
 //DB 接続
 mongoose
