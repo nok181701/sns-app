@@ -40,8 +40,9 @@ const LongMenu = ({ post, setPosts, username }) => {
         return new Date(post2.createdAt) - new Date(post1.createdAt);
       });
       setPosts(sortedPosts);
+      alert("削除しました");
     } catch (err) {
-      console.log(`${err}:削除できませんでした。`);
+      alert("自分の投稿のみ、削除できます。");
     }
   };
 
