@@ -2,11 +2,12 @@
 
 こちら Udemy を参考に MERN スタックで SNS アプリを作成いたしました。
 
+https://www.udemy.com/course/fullstack-mern-project-course/
 
 <img width="1440" alt="スクリーンショット 2023-12-27 17 07 20" src="https://github.com/nok181701/sns-app/assets/127045784/c6b60f32-f888-43a7-8631-709233621aad">
 
 
-https://www.udemy.com/course/fullstack-mern-project-course/
+
 
 以上をもとに派生開発をしました。
 
