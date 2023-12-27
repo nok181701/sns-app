@@ -1,10 +1,5 @@
 export const Users = [
   {
-    id: "65815108635680652a412b28",
-    profilePicture: "/chiikawa.png",
-    username: "nanako",
-  },
-  {
     id: "657c4ffd7553b3f4884e6eaa",
     profilePicture: "/person/2.jpeg",
     username: "及川",
@@ -18,6 +13,11 @@ export const Users = [
     id: "6577d72b81c9d577b67fbd45",
     profilePicture: "/person/4.jpeg",
     username: "田中",
+  },
+  {
+    id: "658bc76c66fc35536d15ca7e",
+    profilePicture: "/person/1.jpeg",
+    username: "わんわん",
   },
 ];
 
