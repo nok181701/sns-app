@@ -8,6 +8,7 @@ const mongoose = require("mongoose");
 const path = require("path");
 const cors = require("cors");
 require("dotenv").config();
+app.use(cors());
 
 //DB 接続
 mongoose
@@ -26,7 +27,6 @@ app.use("/api/auth", authRouter);
 app.use("/api/users", userRouter);
 app.use("/api/posts", postRouter);
 app.use("/api/upload", uploadRouter);
-app.use(cors());
 
 app.listen(5000, () => {
   console.log("ポート3000で受付中...");
