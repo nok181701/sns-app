@@ -1,36 +1,16 @@
 import "src/pages/Register/Register.css";
-import React, { useRef } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import React from "react";
+import useRegister from "src/hooks/Register/useRegister";
 
 const Register = () => {
-  const username = useRef();
-  const email = useRef();
-  const password = useRef();
-  const passwordConfirmation = useRef();
-  const navigate = useNavigate();
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (password.current.value !== passwordConfirmation.current.value) {
-      passwordConfirmation.current.setCustomValidity("パスワードが違います");
-    } else {
-      try {
-        const user = {
-          username: username.current.value,
-          email: email.current.value,
-          password: password.current.value,
-        };
-        await axios.post("auth/register", user);
-        navigate("/login");
-      } catch (err) {
-        console.log(err);
-      }
-    }
-  };
-  const GoToLoginPage = () => {
-    navigate("/login");
-  };
+  const {
+    username,
+    email,
+    password,
+    passwordConfirmation,
+    handleSubmit,
+    GoToLoginPage,
+  } = useRegister();
 
   return (
     <div className="login">
