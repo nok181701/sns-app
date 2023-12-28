@@ -12,7 +12,7 @@ const Profile = () => {
   const PUBLIC_FOLDER = process.env.REACT_APP_PUBLIC_FOLDER;
   const { user: currentUser, dispatch } = useContext(AuthContext);
   const [user, setUser] = useState({});
-  const { username } = useParams(); //paramのuserName
+  const { username } = useParams();
   const [followingsCount, setFollowingsCount] = useState(
     currentUser.followings.length
   );
