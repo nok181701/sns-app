@@ -14,15 +14,19 @@ const ProfileInfo = ({
     <div className="profileRightTop">
       <div className="profileCover">
         <img
-          src={user.coverPicture || PUBLIC_FOLDER + "/post/default.jpeg"}
+          src={
+            user.coverPicture
+              ? `${PUBLIC_FOLDER}/${user.coverPicture}`
+              : `${PUBLIC_FOLDER}/post/default.jpeg`
+          }
           alt="背景画像"
           className="profileCoverImg"
         />
         <img
           src={
             user.profilePicture
-              ? PUBLIC_FOLDER + "/" + user.profilePicture
-              : PUBLIC_FOLDER + "/person/noAvatar.png"
+              ? `${PUBLIC_FOLDER}/${user.profilePicture}`
+              : `${PUBLIC_FOLDER}/person/noAvatar.png`
           }
           alt="プロフィール画像"
           className="profileUserImg"
@@ -33,29 +37,27 @@ const ProfileInfo = ({
         <span className="prfileInfoDesc">{user.desc}</span>
         <div className="followWrapper">
           <span className="followings">
-            {currentUser.username === user.username
-              ? `フォロー：${followingsCount}`
-              : `フォロー：${
-                  Array.isArray(user.followings) ? user.followings.length : 0
-                }`}
+            <span className="followings">
+              フォロー：
+              {currentUser.username === user.username
+                ? followingsCount
+                : user.followings?.length || 0}
+            </span>
           </span>
           <span className="followers">
+            フォロワー：
             {currentUser.username === user.username
-              ? `フォロワー：${followersCount}`
-              : `フォロワー：${
-                  Array.isArray(user.followers) ? user.followers.length : 0
-                }`}
+              ? followersCount
+              : user.followers?.length || 0}
           </span>
         </div>
-        {currentUser.username !== user.username ? (
+        {currentUser.username !== user.username && (
           <button onClick={follow} className="followButton">
-            {isFollow ? (
-              <p className="followButtonText">フォロー中</p>
-            ) : (
-              <p className="followButtonText">フォローする</p>
-            )}
+            <p className="followButtonText">
+              {isFollow ? "フォロー中" : "フォローする"}
+            </p>
           </button>
-        ) : null}
+        )}
       </div>
     </div>
   );
