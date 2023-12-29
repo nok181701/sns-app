@@ -41,6 +41,13 @@ const Profile = () => {
 
       storedData.isFollow = newIsFollowValue;
       localStorage.setItem("user", JSON.stringify(storedData));
+    } else {
+      const storedDataString = localStorage.getItem("user");
+      const storedData = JSON.parse(storedDataString) || {};
+      const newIsFollowValue = currentUser.followings.includes(user._id);
+      setIsFollow(newIsFollowValue);
+      storedData.isFollow = newIsFollowValue;
+      localStorage.setItem("user", JSON.stringify(storedData));
     }
     return;
   }, [currentUser.followings, user._id]);
