@@ -1,6 +1,6 @@
-import "src/pages/Register/Register.css";
 import React from "react";
 import useRegister from "src/hooks/Register/useRegister";
+import "src/pages/Register/Register.css";
 
 const Register = () => {
   const {
