@@ -1,18 +1,18 @@
-import "src/pages/Profile/Profile.css";
-import Rirhtbar from "src/components/Rightbar";
-import Sidebar from "src/components/Sidebar";
-import TimeLine from "src/components/TimeLine";
-import Topbar from "src/components/Topbar";
-import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import axios from "axios";
+import Topbar from "src/components/Topbar";
+import Sidebar from "src/components/Sidebar";
+import TimeLine from "src/components/TimeLine";
+import Rirhtbar from "src/components/Rightbar";
 import { AuthContext } from "src/state/AuthContext";
+import "src/pages/Profile/Profile.css";
+import ProfileInfo from "src/components/Profile/ProfileInfo";
 
 const Profile = () => {
-  const PUBLIC_FOLDER = process.env.REACT_APP_PUBLIC_FOLDER;
   const { user: currentUser, dispatch } = useContext(AuthContext);
-  const [user, setUser] = useState({});
   const { username } = useParams();
+  const [user, setUser] = useState({});
   const [followingsCount, setFollowingsCount] = useState(
     currentUser.followings.length
   );
@@ -21,13 +21,18 @@ const Profile = () => {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const response = await axios.get(`/users`, {
-        params: {
-          username: username,
-        },
-      });
-      setUser(response.data);
+      try {
+        const response = await axios.get(`/users`, {
+          params: {
+            username: username,
+          },
+        });
+        setUser(response.data);
+      } catch (error) {
+        console.error("Failed to fetch user:", error);
+      }
     };
+
     fetchUser();
   }, [username, followingsCount, followersCount, currentUser]);
 
@@ -72,73 +77,26 @@ const Profile = () => {
   };
 
   return (
-    <>
-      <div>
-        <Topbar />
-        <div className="profile">
-          <Sidebar profile />
-          <div className="profileRight">
-            <div className="profileRightTop">
-              <div className="profileCover">
-                <img
-                  src={
-                    user.coverPicture || PUBLIC_FOLDER + "/post/default.jpeg"
-                  }
-                  alt="背景画像"
-                  className="profileCoverImg"
-                />
-                <img
-                  src={
-                    user.profilePicture
-                      ? PUBLIC_FOLDER + "/" + user.profilePicture
-                      : PUBLIC_FOLDER + "/person/noAvatar.png"
-                  }
-                  alt="プロフィール画像"
-                  className="profileUserImg"
-                />
-              </div>
-              <div className="profileInfo">
-                <h4 className="profileInfoName">{user.username}</h4>
-                <span className="prfileInfoDesc">{user.desc}</span>
-                <div className="followWrapper">
-                  <span className="followings">
-                    {currentUser.username === user.username
-                      ? `フォロー：${followingsCount}`
-                      : `フォロー：${
-                          Array.isArray(user.followings)
-                            ? user.followings.length
-                            : 0
-                        }`}
-                  </span>
-                  <span className="followers">
-                    {currentUser.username === user.username
-                      ? `フォロワー：${followersCount}`
-                      : `フォロワー：${
-                          Array.isArray(user.followers)
-                            ? user.followers.length
-                            : 0
-                        }`}
-                  </span>
-                </div>
-                {currentUser.username !== username ? (
-                  <button onClick={follow} className="followButton">
-                    {isFollow ? (
-                      <p className="followButtonText">フォロー中</p>
-                    ) : (
-                      <p className="followButtonText">フォローする</p>
-                    )}
-                  </button>
-                ) : null}
-              </div>
-            </div>
-            <div className="profileRightBottom">
-              <TimeLine username={username} />
-              <Rirhtbar user={user} />
-            </div>
+    <div>
+      <Topbar />
+      <div className="profile">
+        <Sidebar profile />
+        <div className="profileRight">
+          <ProfileInfo
+            user={user}
+            currentUser={currentUser}
+            follow={follow}
+            followingsCount={followingsCount}
+            followersCount={followersCount}
+            isFollow={isFollow}
+          />
+          <div className="profileRightBottom">
+            <TimeLine username={username} />
+            <Rirhtbar user={user} />
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
