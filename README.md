@@ -26,6 +26,8 @@ https://www.udemy.com/course/fullstack-mern-project-course/
 
 ・投稿の削除
 
+・一部コンポーネント内のロジックのcustom hooks化
+
 
 **今後改修していくこと**
 
@@ -37,7 +39,9 @@ https://www.udemy.com/course/fullstack-mern-project-course/
 
 ・検索機能（トップバーの）の実装
 
-・画像をローカルでなく、Mongo DB に格納
+・画像をCDNに保存
+
+・TypeScriptへのリプレイス
 
 ・レスポンシブ化
 
