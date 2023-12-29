@@ -32,24 +32,14 @@ const Profile = () => {
   }, [username, followingsCount, followersCount, currentUser]);
 
   useEffect(() => {
-    if (currentUser.followings.includes(user._id)) {
-      const storedDataString = localStorage.getItem("user");
-      const storedData = JSON.parse(storedDataString) || {};
+    const storedDataString = localStorage.getItem("user") || "{}";
+    const storedData = JSON.parse(storedDataString);
 
-      const newIsFollowValue = currentUser.followings.includes(user._id);
-      setIsFollow(newIsFollowValue);
+    const newIsFollowValue = currentUser.followings.includes(user._id);
+    setIsFollow(newIsFollowValue);
 
-      storedData.isFollow = newIsFollowValue;
-      localStorage.setItem("user", JSON.stringify(storedData));
-    } else {
-      const storedDataString = localStorage.getItem("user");
-      const storedData = JSON.parse(storedDataString) || {};
-      const newIsFollowValue = currentUser.followings.includes(user._id);
-      setIsFollow(newIsFollowValue);
-      storedData.isFollow = newIsFollowValue;
-      localStorage.setItem("user", JSON.stringify(storedData));
-    }
-    return;
+    storedData.isFollow = newIsFollowValue;
+    localStorage.setItem("user", JSON.stringify(storedData));
   }, [currentUser.followings, user._id]);
 
   const follow = async () => {
@@ -57,12 +47,15 @@ const Profile = () => {
       const response = await axios.put(`/users/${user._id}/follow`, {
         userId: currentUser._id,
       });
+
       const updatedUser = response.data;
       dispatch(updatedUser);
       localStorage.setItem("user", JSON.stringify(updatedUser));
+
       setFollowingsCount((prevState) => prevState + 1);
       alert("フォローしました");
       window.location.reload();
+
       setIsFollow((prevState) => {
         const newFollowState = !prevState;
         localStorage.setItem(
@@ -71,6 +64,7 @@ const Profile = () => {
         );
         return newFollowState;
       });
+
       return response;
     } catch (e) {
       console.log("既にフォローしています。");
