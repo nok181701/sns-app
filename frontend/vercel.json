@@ -1,0 +1,11 @@
+{
+  "routes": [
+    {
+      "src": "/api/.*",
+      "methods": ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE", "OPTIONS"],
+      "headers": "Origin, X-Requested-With, Content-Type, Accept, Authorization",
+      "allowCredentials": true,
+      "dest": "/api/index.js"
+    }
+  ]
+}
