@@ -7,6 +7,7 @@ const postRouter = require("./routes/posts");
 const uploadRouter = require("./routes/upload");
 const mongoose = require("mongoose");
 const path = require("path");
+const PORT = process.env.PORT || 5000;
 require("dotenv").config();
 
 //DB 接続
@@ -23,6 +24,8 @@ mongoose
 app.use(
   cors({
     origin: "https://sns-app-alpha.vercel.app",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    credentials: true,
   })
 );
 app.use("/images", express.static(path.join(__dirname, "public/images")));
@@ -32,6 +35,10 @@ app.use("/api/users", userRouter);
 app.use("/api/posts", postRouter);
 app.use("/api/upload", uploadRouter);
 
-app.listen(5000, () => {
-  console.log("ポート3000で受付中...");
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
+
+app.listen(PORT, () => {
+  console.log(`ポート${PORT}で受付中...`);
 });
