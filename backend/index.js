@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 const app = express();
 const userRouter = require("./routes/users");
 const authRouter = require("./routes/auth");
@@ -19,6 +20,11 @@ mongoose
   });
 
 //Middleware
+app.use(
+  cors({
+    origin: "https://sns-app-alpha.vercel.app",
+  })
+);
 app.use("/images", express.static(path.join(__dirname, "public/images")));
 app.use(express.json());
 app.use("/api/auth", authRouter);
