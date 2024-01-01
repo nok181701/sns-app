@@ -13,6 +13,8 @@ const OPTIONS = ["削除"];
 const ITEM_HEIGHT = 48;
 
 const LongMenu = ({ post, setPosts, username }) => {
+  const apiUrl =
+    process.env.REACT_APP_API_URL || process.env.REACT_APP_BACKEND_ENDPOINT_DEV;
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const { user: currentUser } = useContext(AuthContext); //ログインしているユーザー
@@ -28,14 +30,14 @@ const LongMenu = ({ post, setPosts, username }) => {
   const handleDelete = async () => {
     setAnchorEl(null);
     try {
-      await axios.delete(`/posts/${post._id}`, {
+      await axios.delete(`${apiUrl}/posts/${post._id}`, {
         headers: {
           "User-Id": currentUser._id,
         },
       });
       const response = username
-        ? await axios.get(`/posts/profile/${username}`)
-        : await axios.get(`/posts/timeline/${currentUser._id}`);
+        ? await axios.get(`${apiUrl}/posts/profile/${username}`)
+        : await axios.get(`${apiUrl}/posts/timeline/${currentUser._id}`);
       const sortedPosts = response.data.sort((post1, post2) => {
         return new Date(post2.createdAt) - new Date(post1.createdAt);
       });

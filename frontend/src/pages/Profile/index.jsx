@@ -10,6 +10,8 @@ import "src/pages/Profile/Profile.css";
 import ProfileInfo from "src/components/Profile/ProfileInfo";
 
 const Profile = () => {
+  const apiUrl =
+    process.env.REACT_APP_API_URL || process.env.REACT_APP_BACKEND_ENDPOINT_DEV;
   const { user: currentUser, dispatch } = useContext(AuthContext);
   const { username } = useParams();
   const [user, setUser] = useState({});
@@ -22,7 +24,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await axios.get(`/users`, {
+        const response = await axios.get(`${apiUrl}/users`, {
           params: {
             username: username,
           },
@@ -34,7 +36,7 @@ const Profile = () => {
     };
 
     fetchUser();
-  }, [username, followingsCount, followersCount, currentUser]);
+  }, [username, followingsCount, followersCount, currentUser, apiUrl]);
 
   useEffect(() => {
     const storedDataString = localStorage.getItem("user") || "{}";
@@ -49,7 +51,7 @@ const Profile = () => {
 
   const follow = async () => {
     try {
-      const response = await axios.put(`/users/${user._id}/follow`, {
+      const response = await axios.put(`${apiUrl}/users/${user._id}/follow`, {
         userId: currentUser._id,
       });
 

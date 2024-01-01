@@ -6,40 +6,45 @@ import { useParams } from "react-router-dom";
 
 const ProfileRightbar = () => {
   const PUBLIC_FOLDER = process.env.REACT_APP_PUBLIC_FOLDER;
+  const apiUrl =
+    process.env.REACT_APP_API_URL || process.env.REACT_APP_BACKEND_ENDPOINT_DEV;
   const { user } = useContext(AuthContext);
   const [, setprofileUser] = useState([]);
   const { username } = useParams(); //paramのuserName
   const [friends, setFriends] = useState([]);
 
-  const findFriends = useCallback(async (user) => {
-    const { followers, followings } = user || {};
-    if (followers && followings) {
-      const includeFriends = followers.filter((friend) =>
-        followings.includes(friend)
-      );
-      if (includeFriends.length === 0) return;
-      try {
-        const friendResponse = await axios.get("/users", {
-          params: {
-            userIds: includeFriends,
-          },
-        });
-        const friendsData = friendResponse.data;
-        setFriends([...friendsData]);
-        return friendsData;
-      } catch (err) {
-        console.error("お友達がいません。", err);
-        return [];
+  const findFriends = useCallback(
+    async (user) => {
+      const { followers, followings } = user || {};
+      if (followers && followings) {
+        const includeFriends = followers.filter((friend) =>
+          followings.includes(friend)
+        );
+        if (includeFriends.length === 0) return;
+        try {
+          const friendResponse = await axios.get(`${apiUrl}/users`, {
+            params: {
+              userIds: includeFriends,
+            },
+          });
+          const friendsData = friendResponse.data;
+          setFriends([...friendsData]);
+          return friendsData;
+        } catch (err) {
+          console.error("お友達がいません。", err);
+          return [];
+        }
       }
-    }
-    return [];
-  }, []);
+      return [];
+    },
+    [apiUrl]
+  );
 
   useEffect(() => {
     let isMounted = true;
     const fetchUser = async () => {
       try {
-        const response = await axios.get(`/users`, {
+        const response = await axios.get(`${apiUrl}/users`, {
           params: {
             username: username,
           },
@@ -56,7 +61,7 @@ const ProfileRightbar = () => {
     return () => {
       isMounted = false;
     };
-  }, [username, findFriends]);
+  }, [username, findFriends, apiUrl]);
 
   return (
     <>

@@ -7,6 +7,8 @@ import { AuthContext } from "src/state/AuthContext";
 import { Link } from "react-router-dom";
 
 const Post = ({ post, setPosts, username }) => {
+  const apiUrl =
+    process.env.REACT_APP_API_URL || process.env.REACT_APP_BACKEND_ENDPOINT_DEV;
   const PUBLIC_FOLDER = process.env.REACT_APP_PUBLIC_FOLDER;
   const [like, setLike] = useState(post.likes.length);
   const [isLiked, setIsLiked] = useState(false);
@@ -15,18 +17,20 @@ const Post = ({ post, setPosts, username }) => {
 
   const handleLike = useCallback(async () => {
     try {
-      await axios.put(`/posts/${post._id}/like`, { userId: currentUser._id });
+      await axios.put(`${apiUrl}/posts/${post._id}/like`, {
+        userId: currentUser._id,
+      });
       setLike((prevLike) => (isLiked ? prevLike - 1 : prevLike + 1));
       setIsLiked((prevIsLiked) => !prevIsLiked);
     } catch (err) {
       console.log(err);
     }
-  }, [isLiked, currentUser._id, post._id]);
+  }, [isLiked, currentUser._id, post._id, apiUrl]);
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await axios.get(`/users/${post.userId}`);
+        const response = await axios.get(`${apiUrl}/users/${post.userId}`);
         setUser(response.data);
       } catch (error) {
         console.error(error);
@@ -34,7 +38,7 @@ const Post = ({ post, setPosts, username }) => {
     };
 
     fetchUser();
-  }, [post.userId]);
+  }, [post.userId, apiUrl]);
 
   return (
     <div className="post">
