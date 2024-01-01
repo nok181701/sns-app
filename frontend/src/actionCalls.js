@@ -4,7 +4,7 @@ export const loginCall = async (user, dispatch) => {
   dispatch({ type: "LOGIN_START" });
   try {
     const res = await axios.post(
-      "https://sns-app-backend-013cef86da2c.herokuapp.com/api/auth/login",
+      `${process.env.REACT_APP_BACKEND_ENDPOINT}/auth/login`,
       user
     );
     dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
