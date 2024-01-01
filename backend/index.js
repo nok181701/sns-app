@@ -23,7 +23,7 @@ mongoose
 //Middleware
 app.use(
   cors({
-    origin: "https://sns-app-alpha.vercel.app",
+    origin: "https://sns-app-phi.vercel.app",
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true,
   })
