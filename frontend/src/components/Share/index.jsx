@@ -19,6 +19,8 @@ const SHAREOPTIONS = [
 ];
 
 const Share = () => {
+  const apiUrl =
+    process.env.REACT_APP_API_URL || process.env.REACT_APP_BACKEND_ENDPOINT_DEV;
   const PUBLIC_FOLDER = process.env.REACT_APP_PUBLIC_FOLDER;
   const { user } = useContext(AuthContext); //ログインしているユーザー
   const desc = useRef();
@@ -38,14 +40,14 @@ const Share = () => {
       data.append("file", file);
       newPost.img = fileName;
       try {
-        await axios.post("/upload", data);
+        await axios.post(`${apiUrl}/upload`, data);
       } catch (err) {
         console.log(err);
       }
     }
 
     try {
-      await axios.post("/posts", newPost);
+      await axios.post(`${apiUrl}/posts`, newPost);
       window.location.reload();
     } catch (err) {
       console.log(err);
