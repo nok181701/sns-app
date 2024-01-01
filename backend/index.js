@@ -21,13 +21,7 @@ mongoose
   });
 
 //Middleware
-app.use(
-  cors({
-    origin: "https://sns-app-phi.vercel.app",
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    credentials: true,
-  })
-);
+app.use(cors());
 app.use("/images", express.static(path.join(__dirname, "public/images")));
 app.use(express.json());
 app.use("/api/auth", authRouter);
