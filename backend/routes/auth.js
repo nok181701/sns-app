@@ -41,7 +41,8 @@ router.post("/login", async (req, res) => {
       return res.status(404).json("パスワードが違います。");
     }
   } catch (err) {
-    return res.status(500).json(err);
+    console.error(err);
+    return res.status(500).json({ error: "サーバーエラーが発生しました" });
   }
 });
 
