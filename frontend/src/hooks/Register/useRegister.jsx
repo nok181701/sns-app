@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const useRegister = () => {
+  const apiUrl =
+    process.env.REACT_APP_API_URL || process.env.REACT_APP_BACKEND_ENDPOINT_DEV;
   const username = useRef();
   const email = useRef();
   const password = useRef();
@@ -20,7 +22,7 @@ const useRegister = () => {
           email: email.current.value,
           password: password.current.value,
         };
-        await axios.post("/api/auth/register", user);
+        await axios.post(`${apiUrl}/auth/register`, user);
         navigate("/login");
       } catch (err) {
         console.log(err);
