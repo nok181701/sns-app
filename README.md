@@ -1,8 +1,6 @@
 # **SNS-APP**
 
-こちら Udemy を参考にSNSアプリを作成いたしました。
-
-フロントエンドをVercel、バックエンドをHerokuにデプロイしています
+クライアントとサーバーの連携を手を動かしながら理解したかったのでUdemy を参考にSNSアプリを作成いたしました。
 
 https://sns-app-phi.vercel.app
 
