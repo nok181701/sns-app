@@ -5,6 +5,7 @@ import { useCallback, useContext, useEffect, useState } from "react";
 import { format } from "timeago.js";
 import { AuthContext } from "src/state/AuthContext";
 import { Link } from "react-router-dom";
+import { useMemo } from "react";
 
 const Post = ({ post, setPosts, username }) => {
   const apiUrl =
@@ -27,18 +28,20 @@ const Post = ({ post, setPosts, username }) => {
     }
   }, [isLiked, currentUser._id, post._id, apiUrl]);
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const response = await axios.get(`${apiUrl}/users/${post.userId}`);
-        setUser(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchUser();
+  const fetchUser = useCallback(async () => {
+    try {
+      const response = await axios.get(`${apiUrl}/users/${post.userId}`);
+      setUser(response.data);
+    } catch (error) {
+      console.error(error);
+    }
   }, [post.userId, apiUrl]);
+
+  const memoizedFetchUser = useMemo(() => fetchUser, [fetchUser]);
+
+  useEffect(() => {
+    memoizedFetchUser();
+  }, [post.userId, apiUrl, memoizedFetchUser]);
 
   return (
     <div className="post">
