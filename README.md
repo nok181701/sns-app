@@ -19,6 +19,13 @@ Node.js/nodemon/express/bcrypt/cors/dotenv/helmet/mongodb/mongoose/multer
 
 React/axios/React-dom/react-router-dom/timeago.js/materialUl
 
+**インフラ**
+
+バックエンド：Heroku
+
+フロントエンド：Vercel
+
+布団
 
 Udemyレクチャー後、以下の開発をしました。
 
