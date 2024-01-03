@@ -9,6 +9,30 @@ https://sns-app-phi.vercel.app
 <img width="1440" alt="スクリーンショット 2023-12-27 17 07 20" src="https://github.com/nok181701/sns-app/assets/127045784/c6b60f32-f888-43a7-8631-709233621aad">
 
 
+# **技術スタック**
+
+# **バックエンド**
+
+・Node.js　v20.3.0
+
+・nodemon　v3.0.2
+
+・express　v4.18.2
+
+・bcrypt　v5.1.1
+
+・cors　v2.8.5
+
+・dotenv　v16.3.1
+
+・helmet　v7.1.0
+
+・mongodb v6.3.0
+
+・mongoose　v8.0.3
+
+・multer　v1.4.5-lts.1
+
 
 
 Udemyレクチャー後、以下の開発をしました。
@@ -18,7 +42,7 @@ Udemyレクチャー後、以下の開発をしました。
 
 ・becript によるパスワードのハッシュ化
 
-・一定時間、を超えるとユーザー情報がローカルストレージから消え、ログアウトする
+・ログアウト機能
 
 ・プロフィールページの相互フォロー欄
 
