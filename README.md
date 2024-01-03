@@ -11,7 +11,7 @@ https://sns-app-phi.vercel.app
 
 # **技術スタック**
 
-# **バックエンド**
+**バックエンド**
 
 ・Node.js　v20.3.0
 
