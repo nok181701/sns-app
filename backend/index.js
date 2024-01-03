@@ -20,9 +20,14 @@ mongoose
     console.log(`エラー：${err}`);
   });
 
+const allowed_origins = [
+  "https://sns-app-phi.vercel.app",
+  "http://localhost:3000",
+];
+
 app.use(
   cors({
-    origin: "https://sns-app-phi.vercel.app",
+    origin: allowed_origins,
     credentials: true,
   })
 );
