@@ -2,7 +2,7 @@
 
 こちら Udemy を参考に MERN スタックで SNS アプリを作成いたしました。
 
-デプロイはフロントエンドをVercel、バックエンドをHerokuにデプロイしています
+フロントエンドをVercel、バックエンドをHerokuにデプロイしています
 
 https://sns-app-phi.vercel.app
 
