@@ -11,7 +11,7 @@ https://sns-app-phi.vercel.app
 
 
 
-以上をもとに派生開発をしました。
+Udemyレクチャー後、以下の開発をしました。
 
 **開発内容**
 
@@ -28,7 +28,9 @@ https://sns-app-phi.vercel.app
 
 ・投稿の削除
 
-・一部コンポーネント内のロジックのcustom hooks化
+・React Hooksによるリファクタリング
+
+・一部コンポーネント内のロジックのReact　Custom Hooks化
 
 
 **今後改修していくこと**
