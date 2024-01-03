@@ -16,7 +16,7 @@ https://sns-app-phi.vercel.app
 Node.js/nodemon/express/bcrypt/cors/dotenv/helmet/mongodb/mongoose/multer
 
 **フロントエンド**
-
+React/axios/React-dom/react-router-dom/timeago.js/materialUl
 
 
 Udemyレクチャー後、以下の開発をしました。
