@@ -25,8 +25,6 @@ React/axios/React-dom/react-router-dom/timeago.js/materialUl
 
 フロントエンド：Vercel
 
-布団
-
 Udemyレクチャー後、以下の開発をしました。
 
 **開発内容**
