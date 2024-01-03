@@ -13,25 +13,10 @@ https://sns-app-phi.vercel.app
 
 **バックエンド**
 
-・Node.js　v20.3.0
+Node.js　v20.3.0/nodemon　v3.0.2/express　v4.18.2/bcrypt　v5.1.1/cors　v2.8.5
+/dotenv　v16.3.1/helmet　v7.1.0/mongodb v6.3.0/mongoose　v8.0.3/multer　v1.4.5-lts.1
 
-・nodemon　v3.0.2
-
-・express　v4.18.2
-
-・bcrypt　v5.1.1
-
-・cors　v2.8.5
-
-・dotenv　v16.3.1
-
-・helmet　v7.1.0
-
-・mongodb v6.3.0
-
-・mongoose　v8.0.3
-
-・multer　v1.4.5-lts.1
+**フロントエンド**
 
 
 
