@@ -20,19 +20,18 @@ mongoose
     console.log(`エラー：${err}`);
   });
 
-//Middleware
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://sns-app-phi.vercel.app",
+    credentials: true,
+  })
+);
 app.use("/images", express.static(path.join(__dirname, "public/images")));
 app.use(express.json());
 app.use("/api/auth", authRouter);
 app.use("/api/users", userRouter);
 app.use("/api/posts", postRouter);
 app.use("/api/upload", uploadRouter);
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Credentials", true);
-  next();
-});
-
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
