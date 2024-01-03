@@ -28,9 +28,9 @@ React/axios/React-dom/react-router-dom/timeago.js/materialUl
 
 ・タイムライン機能
 
-・フォロー機能
-
 ・いいね機能
+
+・フォロー機能
 
 ・投稿の削除
 
@@ -48,6 +48,7 @@ React/axios/React-dom/react-router-dom/timeago.js/materialUl
 
 ・一部コンポーネント内のロジックのReact　Custom Hooks化
 
+上記３つ以降はレクチャー後、派生開発として個人で開発しています。
 
 **今後改修していくこと**
 
